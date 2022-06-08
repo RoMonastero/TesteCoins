@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:teste_coins/app/models/user_model.dart';
 import 'package:teste_coins/app/shared/widgets/shimmer_card.dart';
-
 import '../../models/criptomoedas_model.dart';
-
 import '../constants.dart';
 import 'criptomoedas_card.dart';
+import 'shimmer_widget.dart';
 
 class HomePageWidget extends StatefulWidget {
   final UserModel userModel;
@@ -79,13 +77,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       color: Constants.blue,
                     ),
                   )
-                : Shimmer.fromColors(
-                    highlightColor: Constants.grey,
-                    baseColor: Constants.lightGrey,
-                    child: Text(
-                      "...",
-                      style: TextStyle(color: Constants.grey),
-                    ),
+                : const ShimmerWidget.rectangular(
+                    heigh: 15,
+                    width: 64,
                   ),
           ],
         ),

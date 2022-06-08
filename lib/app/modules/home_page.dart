@@ -6,7 +6,6 @@ import 'package:teste_coins/app/shared/constants.dart';
 import '../models/user_model.dart';
 import '../services/criptomoedas_service.dart';
 import 'package:http/http.dart' as http;
-
 import '../shared/widgets/home_page_widget.dart';
 
 class HomePage extends StatefulWidget {

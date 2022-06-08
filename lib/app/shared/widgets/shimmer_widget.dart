@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-
 import '../constants.dart';
 
 class ShimmerWidget extends StatelessWidget {
@@ -10,7 +9,7 @@ class ShimmerWidget extends StatelessWidget {
 
   const ShimmerWidget.rectangular({
     Key? key,
-    this.width = double.infinity,
+    required this.width,
     required this.heigh,
     this.shapeBorder = const RoundedRectangleBorder(),
   }) : super(key: key);
