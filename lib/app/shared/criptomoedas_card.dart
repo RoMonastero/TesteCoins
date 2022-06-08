@@ -1,18 +1,22 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
+
+import 'constants.dart';
 
 class CriptoMoedasCard extends StatefulWidget {
   final String moeda;
   final String imageUrl;
   final String cotation;
+  final String symbol;
+  final String fee;
+  final String description;
   const CriptoMoedasCard(
       {Key? key,
       required this.moeda,
       required this.imageUrl,
-      required this.cotation})
+      required this.cotation,
+      required this.symbol,
+      required this.fee,
+      required this.description})
       : super(key: key);
 
   @override
@@ -20,55 +24,62 @@ class CriptoMoedasCard extends StatefulWidget {
 }
 
 class _CriptoMoedasCardState extends State<CriptoMoedasCard> {
+  bool isPressed = false;
   @override
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      //shadowColor: Constants.limeBlack,
+      shadowColor: Constants.black,
       margin: const EdgeInsets.symmetric(horizontal: 35, vertical: 15),
       child: ListTile(
-        onTap: () {},
+        onTap: () {
+          setState(() {
+            isPressed = !isPressed;
+          });
+        },
         title: Text(
-          widget.moeda,
+          "${widget.moeda} - ${widget.symbol}",
           style: const TextStyle(
             fontSize: 16,
-            //color: Constants.limeGreen,
             fontWeight: FontWeight.w700,
           ),
         ),
-        subtitle: FutureBuilder<http.Response>(
-            future: http.get(
-              Uri.parse('https://economia.awesomeapi.com.br/last/USD-BRL'),
-              headers: {
-                "Content-Type": "application/json",
-              },
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Cotação: BRL ${widget.cotation}",
+              style: TextStyle(
+                fontSize: 14,
+                color: Constants.black,
+                fontWeight: FontWeight.w700,
+              ),
             ),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                http.Response response = snapshot.data!;
-                var json = jsonDecode(response.body);
-                var f = NumberFormat("###.00", "pt_BR");
-                double usdToBrl = double.parse(json['USDBRL']['bid']);
-                double cotation = double.parse(widget.cotation);
-                return Text(
-                  "Cotação: BRL ${f.format(cotation * usdToBrl)}",
-                  style: const TextStyle(
-                    fontSize: 14,
-                    // color: Constants.limeBlack,
-                    fontWeight: FontWeight.w700,
-                  ),
-                );
-              } else {
-                return const Text(
-                  "Cotação: ...",
-                  style: TextStyle(
-                    fontSize: 14,
-                    // color: Constants.limeBlack,
-                    fontWeight: FontWeight.w700,
-                  ),
-                );
-              }
-            }),
+            isPressed
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Taxa: BRL ${widget.fee}",
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Constants.black,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      Text(
+                        "Descrição: ${widget.description}",
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Constants.black,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      )
+                    ],
+                  )
+                : Container()
+          ],
+        ),
         leading: Image.network(widget.imageUrl, fit: BoxFit.cover),
       ),
     );
