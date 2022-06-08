@@ -11,7 +11,8 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<CriptomoedasService>(create: (_) => CriptomoedasService()),
+        ChangeNotifierProvider<CriptomoedasService>(
+            create: (_) => CriptomoedasService()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -19,7 +20,7 @@ class AppWidget extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const MyHomePage(),
+        home: const HomePage(),
       ),
     );
   }
